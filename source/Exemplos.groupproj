@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{FAA1B9E0-BE40-4F00-8232-67573851F51A}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="CacheServerSide\CacheServerSide.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CacheServerSide">
+        <MSBuild Projects="CacheServerSide\CacheServerSide.dproj"/>
+    </Target>
+    <Target Name="CacheServerSide:Clean">
+        <MSBuild Projects="CacheServerSide\CacheServerSide.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CacheServerSide:Make">
+        <MSBuild Projects="CacheServerSide\CacheServerSide.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CacheServerSide"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CacheServerSide:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CacheServerSide:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

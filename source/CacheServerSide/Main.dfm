@@ -64,7 +64,7 @@ object Form1: TForm1
     ShowCaption = False
     TabOrder = 1
     object Button1: TButton
-      Left = 7
+      Left = 9
       Top = 8
       Width = 103
       Height = 25
@@ -163,11 +163,25 @@ object Form1: TForm1
       Caption = 'TEMPO'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -16
       Font.Name = 'Segoe UI'
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 2
+      object CheckBox1: TCheckBox
+        Left = 9
+        Top = 13
+        Width = 97
+        Height = 17
+        Caption = 'Usar Cache'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+      end
     end
   end
   object FDConnection1: TFDConnection

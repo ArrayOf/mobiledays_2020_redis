@@ -39,16 +39,17 @@ type
     Panel5: TPanel;
     FDQueryNovaVenda: TFDQuery;
     Button3: TButton;
+    CheckBox1: TCheckBox;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
-    FConn: IRedisClient;
+    FRedis: IRedisClient;
     FCodigoVendedor: Integer;
     FChaveCache: string;
-    procedure ListarVendas;
+    procedure ListarVendas(const UsarCache: Boolean);
     procedure ExecutarVenda;
     procedure LimparCache;
   public
@@ -64,7 +65,7 @@ implementation
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  Self.ListarVendas();
+  Self.ListarVendas(Self.CheckBox1.Checked);
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -97,19 +98,19 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Self.FDConnection1.Open;
-  Self.FConn := TRedisClient.Create('localhost', 6379);
-  Self.FConn.Connect;
+  Self.FRedis := TRedisClient.Create('localhost', 6379);
+  Self.FRedis.Connect;
 
   Self.FCodigoVendedor := 1;
-  Self.FChaveCache := Format('MOBILEDAYS:2020:VENDAS:%d', [Self.FCodigoVendedor]);
+  Self.FChaveCache := Format('CACHE:MOBILEDAYS:2020:VENDAS:%d', [Self.FCodigoVendedor]);
 end;
 
 procedure TForm1.LimparCache;
 begin
-  Self.FConn.DEL(Self.FChaveCache);
+  Self.FRedis.DEL(Self.FChaveCache);
 end;
 
-procedure TForm1.ListarVendas;
+procedure TForm1.ListarVendas(const UsarCache: Boolean);
 {
   Aqui exemplificamos um fluxo de cacheamento.
 
@@ -132,7 +133,8 @@ begin
   Self.FDQueryListarVenda.Close;
 
   try
-    oDados := Self.FConn.GET(Self.FChaveCache);
+    if UsarCache then
+      oDados := Self.FRedis.GET(Self.FChaveCache);
 
     if oDados.HasValue then
     begin
@@ -140,14 +142,14 @@ begin
       oStream.WriteString(oDados);
       oStream.Seek(0, 0);
       Self.FDQueryListarVenda.LoadFromStream(oStream, sfJSON);
-      Self.FConn.EXPIRE(Self.FChaveCache, SETE_DIAS)
+      Self.FRedis.EXPIRE(Self.FChaveCache, SETE_DIAS)
 
     end else begin
       sOrigem := 'SGBD';
       Self.FDQueryListarVenda.Open;
       Self.FDQueryListarVenda.SaveToStream(oStream, sfJSON);
       oStream.Seek(0, 0);
-      Self.FConn.&SET(Self.FChaveCache, oStream.DataString, SETE_DIAS);
+      Self.FRedis.&SET(Self.FChaveCache, oStream.DataString, SETE_DIAS);
 
     end;
 

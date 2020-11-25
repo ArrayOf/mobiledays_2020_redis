@@ -21,7 +21,7 @@ object Form5: TForm5
     Width = 566
     Height = 41
     Align = alTop
-    Caption = 'O Grande Jogo - TOP 3 das Salas'
+    Caption = 'Joguinho Maneiro - TOP 3 das Salas'
     Font.Charset = ANSI_CHARSET
     Font.Color = clRed
     Font.Height = -21

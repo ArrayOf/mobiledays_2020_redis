@@ -58,6 +58,10 @@ begin
   Self.Memo1.Clear;
   try
     oSalas := Self.FRedis.KEYS('RANKING:JOGO:SALA:*');
+    if oSalas.IsNull then
+    begin
+      Exit;
+    end;
 
     for oSala in oSalas.Value do
     begin

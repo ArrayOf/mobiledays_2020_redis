@@ -142,14 +142,18 @@ begin
       oStream.WriteString(oDados);
       oStream.Seek(0, 0);
       Self.FDQueryListarVenda.LoadFromStream(oStream, sfJSON);
-      Self.FRedis.EXPIRE(Self.FChaveCache, SETE_DIAS)
+      Self.FRedis.EXPIRE(Self.FChaveCache, SETE_DIAS);
 
     end else begin
       sOrigem := 'SGBD';
       Self.FDQueryListarVenda.Open;
-      Self.FDQueryListarVenda.SaveToStream(oStream, sfJSON);
-      oStream.Seek(0, 0);
-      Self.FRedis.&SET(Self.FChaveCache, oStream.DataString, SETE_DIAS);
+
+      if UsarCache then
+      begin
+        Self.FDQueryListarVenda.SaveToStream(oStream, sfJSON);
+        oStream.Seek(0, 0);
+        Self.FRedis.&SET(Self.FChaveCache, oStream.DataString, SETE_DIAS);
+      end;
 
     end;
 

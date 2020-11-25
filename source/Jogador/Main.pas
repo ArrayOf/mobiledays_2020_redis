@@ -110,7 +110,6 @@ begin
   if (Self.Edit1.Text = EmptyStr) or (Self.Edit2.Text = EmptyStr) then
     raise Exception.Create('Credenciais inválidas');
 
-
   Self.FRedis.ZADD(Self.NomeSala, 0, Self.NomeJogador);
 end;
 

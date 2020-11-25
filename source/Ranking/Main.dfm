@@ -29,7 +29,6 @@ object Form5: TForm5
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 0
-    ExplicitLeft = -2
   end
   object Panel2: TPanel
     AlignWithMargins = True
@@ -41,10 +40,6 @@ object Form5: TForm5
     Caption = 'Panel2'
     ShowCaption = False
     TabOrder = 1
-    ExplicitLeft = 288
-    ExplicitTop = 184
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object Memo1: TMemo
       AlignWithMargins = True
       Left = 4
@@ -62,9 +57,6 @@ object Form5: TForm5
         'Memo1')
       ParentFont = False
       TabOrder = 0
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitHeight = 307
     end
   end
   object Timer1: TTimer

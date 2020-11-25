@@ -24,9 +24,8 @@ object Form3: TForm3
     Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 0
-    ExplicitWidth = 348
     object Button2: TButton
-      Left = 109
+      Left = 273
       Top = 8
       Width = 129
       Height = 25
@@ -45,7 +44,6 @@ object Form3: TForm3
     Caption = 'Panel2'
     ShowCaption = False
     TabOrder = 1
-    ExplicitWidth = 348
     object Label1: TLabel
       Left = 11
       Top = 11
@@ -86,6 +84,5 @@ object Form3: TForm3
       'Memo1')
     ParentFont = False
     TabOrder = 2
-    ExplicitWidth = 348
   end
 end
